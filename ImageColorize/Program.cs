@@ -19,8 +19,19 @@ namespace ImageColorize
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+
         private void Form1_Load(object sender, EventArgs e)
+        //private void timer_Tick1(object sender, EventArgs e)
         {
+            //get RGB value from trackers
+            int trackR = trackRed.Value;
+            int trackG = trackGreen.Value;
+            int trackB = trackBlue.Value;
+
+            labRed.Text = trackRed.Value.ToString();
+            labGreen.Text = trackGreen.Value.ToString();
+            labBlue.Text = trackBlue.Value.ToString();
+
             //image path
             string img = "C:\\Users\\admin\\Downloads\\photo_2022-10-21_21-21-35.jpg";
 
@@ -35,9 +46,7 @@ namespace ImageColorize
             int height = bmp.Height;
 
             //3 bitmap for red green blue image
-            Bitmap rbmp = new Bitmap(bmp);
-            Bitmap gbmp = new Bitmap(bmp);
-            Bitmap bbmp = new Bitmap(bmp);
+            Bitmap nbmp = new Bitmap(bmp);
 
             //red green blue image
             for (int y = 0; y < height; y++)
@@ -53,35 +62,17 @@ namespace ImageColorize
                     int g = p.G;
                     int b = p.B;
 
-                    //set red image pixel
-                    rbmp.SetPixel(x, y, Color.FromArgb(a, r, 0, 0));
-
-                    //set green image pixel
-                    gbmp.SetPixel(x, y, Color.FromArgb(a, 0, g, 0));
-
-                    //set blue image pixel
-                    bbmp.SetPixel(x, y, Color.FromArgb(a, 0, 0, b));
-
+                    //setimage pixel
+                    nbmp.SetPixel(x, y, Color.FromArgb(a, trackR, trackG, trackB));
                 }
             }
 
-            //load red image in picturebox2
-            pictureBox2.Image = rbmp;
-
-            //load green image in picturebox3
-            pictureBox3.Image = gbmp;
-
-            //load blue image in picturebox4
-            pictureBox4.Image = bbmp;
+            //load nbmp image in picturebox2
+            pictureBox2.Image = nbmp;
 
             //write (save) red image
-            rbmp.Save("C:\\Users\\admin\\Desktop\\Test\\Red.png");
+            nbmp.Save("C:\\Users\\admin\\Desktop\\Test\\Red.png");
 
-            //write(save) green image
-            gbmp.Save("C:\\Users\\admin\\Desktop\\Test\\Green.png");
-
-            //write (save) blue image
-            bbmp.Save("C:\\Users\\admin\\Desktop\\Test\\Blue.png");
         }
     }
 }
